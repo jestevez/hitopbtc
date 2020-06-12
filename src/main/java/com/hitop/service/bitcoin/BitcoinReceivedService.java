@@ -57,6 +57,10 @@ public class BitcoinReceivedService implements CoinReceivedService {
       final Coin prevBalance, 
       final Coin newBalance) {
 
+    System.out.println("**************");
+    System.out.println("**************");
+    System.out.println("**************");
+
     try {
       walletFile.saveToFile(wallet);
     } catch (IOException e) {

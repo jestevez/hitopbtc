@@ -110,6 +110,15 @@ public class MainController implements ReceiptListener {
   public SseEmitter setupSseEmitter(@PathVariable String sendToAddress) {
     SseEmitter emitter = new SseEmitter(SSE_EMITTER_TIMEOUT);
     sseEmitterMap.put(sendToAddress, emitter);
+    System.out.println("11111111111111");
+    System.out.println("11111111111111");
+    System.out.println("11111111111111");
+    System.out.println(sendToAddress);
+    System.out.println("--------------");
+    System.out.println(sseEmitterMap.toString());
+    System.out.println("2222222222222");
+    System.out.println("2222222222222");
+    System.out.println("2222222222222");
     return emitter;
   }
 
@@ -117,13 +126,22 @@ public class MainController implements ReceiptListener {
     final String sendToAddress = walletService.getTxReceiveAddress(btcTransaction);
     PurchaseOrder order = orderServiceImpl.findBySendToAddress(sendToAddress);
     // TODO: is below newSingleThreadExecutor() the correct method to use?
-    ExecutorService executor = Executors.newSingleThreadExecutor(); // Executors.newCachedThreadPool();
+    ExecutorService executor = Executors.newCachedThreadPool(); // Executors.newSingleThreadExecutor();
     executor.execute(() -> {
       try {
         SseEventBuilder event = SseEmitter.event()
             .data("{\"name\":\"" + order.getName());
         //  .data("{\"email\":\"" + order.getEmail());
         //   etc
+        System.out.println("333333333333");
+        System.out.println("333333333333");
+        System.out.println("333333333333");
+        System.out.println(sendToAddress);
+        System.out.println("--------------");
+        System.out.println(event);
+        System.out.println("444444444444");
+        System.out.println("444444444444");
+        System.out.println("444444444444");
         this.sseEmitterMap.get(sendToAddress).send(event);
         this.sseEmitterMap.get(sendToAddress).complete();
       } catch (Exception e) {
